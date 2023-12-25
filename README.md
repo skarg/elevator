@@ -1,11 +1,8 @@
-Elevator Simulator
-
-Elevator Simulator Design
--------------------------
+# Elevator Simulator
 
 ### Introduction
 
-This paper describes the design and development of a system that simulates the operation of an elevator model. The objects required to build the model will be identified, and a system will be developed that simulates the model. Each of the objects will act independently and manage its own data. One or more objects will manage the user interface. The model allows the user to specify how many of the principal objects the simulation should include on a given run. The output of the model will be a report showing the activity of the major objects.
+This project is an object oriented designed system that simulates the operation of an elevator model. The objects required to build the model will be identified, and a system will be developed that simulates the model. Each of the objects will act independently and manage its own data. One or more objects will manage the user interface. The model allows the user to specify how many of the principal objects the simulation should include on a given run. The output of the model will be a report showing the activity of the major objects.
 
 ### The Model
 
@@ -25,126 +22,137 @@ The number of elevators in the building will be determined by the user. The buil
 
 The first step of identifying objects and classes began by generating a set of candidate classes and objects using the classical approach and behavior analysis. The eligible classes and objects generated using the classical approach are shown in Table 1. Abstractions that relate to system function points revealed during behavior analysis are shown in Table 2.
 
-Tangible Things
+<TABLE border="1">
+<caption>Table 1 - List of eligible objects discovered during analysis.</caption>
 
-Roles
+<TR>
+<TD>Tangible Things</TD>
+<TD>Roles</TD>
+<TD>Events</TD>
+<TD>Interactions</TD>
+<TD>Organizations</TD>
+<TD>External Systems</TD>
+</TR>
 
-Events
+<TR>
+<TD valign="top">building<BR>
+ elevator<BR>
+ buttons<BR>
+ cable<BR>
+ motor<BR>
+ pulley<BR>
+ motor controller<BR>
+ hydraulic<BR>
+ cylinder<BR>
+ hydraulic pump<BR>
+ hydraulic<BR>
+ controller<BR>
+ door edge<BR>
+ closed and locked switch<BR>
+ full open switch<BR>
+ floor indicator<BR>
+ bell / chime<BR>
+lights<BR>
+ fan</TD>
+<TD valign="top">rider<BR>
+ repair person<BR>
+ inspector<BR>
+ observer</TD>
+<TD valign="top">request to floor<BR>
+ request floor<BR>
+door recycle<BR>
+door close<BR>
+door open<BR>
+go up<BR>
+go down<BR>
+stop<BR>
+ring bell<BR>
+update floor<BR>
+indication<BR>
+go to floor<BR>
+change<BR>
+directions<BR>
+break down</TD>
+<TD valign="top">elevator and passengers<BR>
+floor and passengers<BR>
+elevator and floor</TD>
+<TD valign="top">lift system<BR>
+door system<BR>
+building<BR>
+floors<BR>
+elevators<BR>
+passenger<BR>
+requests</TD>
+<TD valign="top">power<BR>
+building<BR>
+closed circuit<BR>
+television<BR>
+emergency<BR>
+phone<BR>
+security</TD>
+</TR>
+</TABLE>
 
-Interactions
-
-Organizations
-
-External Systems
-
-building  
-elevator  
-buttons  
-cable  
-motor  
-pulley  
-motor controller  
-hydraulic  
-cylinder  
-hydraulic pump  
-hydraulic  
-controller  
-door edge  
-closed and locked switch  
-full open switch  
-floor indicator  
-bell / chime  
-lights  
-fan
-
-rider  
-repair person  
-inspector  
-observer
-
-request to floor  
-request floor  
-door recycle  
-door close  
-door open  
-go up  
-go down  
-stop  
-ring bell  
-update floor  
-indication  
-go to floor  
-change  
-directions  
-break down
-
-elevator and passengers  
-floor and passengers  
-elevator and floor
-
-lift system  
-door system  
-building  
-floors  
-elevators  
-passenger  
-requests
-
-power  
-building  
-closed circuit  
-television  
-emergency  
-phone  
-security
-
-Table 1 - List of eligible objects discovered during analysis.
-
-Behaviors
-
-User input for the number of elevators in the building.  
-User input to stop the simulation.  
-A random number of passengers load from lobby onto the elevator and requests a floor.  
-An observer counts the passengers as they load and limit them to the elevator capacity.  
-The elevator closes it's doors after a predetermined amount of time after they are open.  
-The passengers randomly request a floor number for where they want to go.  
-The elevator determines the lowest floor request from all the passengers when traveling up from the lobby and travels to that floor.  
-The passenger unloads at their requested floor.  
-An observer counts the passengers as they unload from the floor.  
-A random floor is selected for each passenger on the elevator.  
-The elevator returns to the lobby for more passengers when all the passengers have departed to their requested floors.  
-The observer reports the results to the user.
-
+<TABLE border="1">
+<caption>
 Table 2 - List of behaviors discovered during analysis.
+</caption>
+
+<TR>
+<TD valign="top">Behaviors</TD>
+</TR>
+
+<TR>
+<TD>User input for the number of elevators in the building.<BR>
+User input to stop the simulation.<BR>
+A random number of passengers load from lobby onto the elevator and requests a floor.<BR>
+An observer counts the passengers as they load and limit them to the elevator capacity.<BR>
+The elevator closes it's doors after a predetermined amount of time after they are open.<BR>
+The passengers randomly request a floor number for where they want to go.<BR>
+The elevator determines the lowest floor request from all the passengers when traveling up from the lobby and travels to that floor.<BR>
+The passenger unloads at their requested floor.<BR>
+An observer counts the passengers as they unload from the floor.<BR>
+A random floor is selected for each passenger on the elevator.<BR>
+The elevator returns to the lobby for more passengers when all the passengers have departed to their requested floors.<BR>
+The observer reports the results to the user.</TD>
+</TR>
+</TABLE>
 
 After perusing the list of possible objects, the elevator is determined to be a primary object. The roles and responsibilities that this abstraction should encompass is then considered. The elevator is responsible for keeping track of which floor it is on, which direction it is traveling, the passengers on board, and the state of operation. Responsibilities such as direction, floor number, and state may seem like overkill for a simple lobby-to-floor elevator simulation; however, in anticipation of possible reuse or expansion, they are included.
 
 These responsibilities are turned into services so that the user interface or other objects can acquire this information. These services provide the return of current information. Other services needed for the elevator include loading and unloading of passengers. The abstraction of the elevator class is summarized as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Elevator</TD>
+</TR>
 
-Elevator
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Keep track of the current floor position, the direction and state of
+  operation, and the number of passengers aboard and their destination.</TD>
+</TR>
 
-Responsibilities:
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>load_passengers<BR>
+unload_passengers<BR>
+current_passengers<BR>
+current_floor<BR>
+current_direction<BR>
+current_state</TD>
+</TR>
 
-Keep track of the current floor position, the direction and state of operation, and the number of passengers aboard and their destination.
-
-Operations:
-
-load\_passengers  
-unload\_passengers  
-current\_passengers  
-current\_floor  
-current\_direction  
-current\_state
-
-Attributes:
-
-passengers  
-floor  
-direction  
-state  
-elevator\_id
+<TR>
+<TD valign="top">Attributes:</TD>
+<TD>passengers<BR>
+floor<BR>
+direction<BR>
+state<BR>
+elevator_id</TD>
+</TR>
+</TABLE>
 
 Instances of this class have a dynamic life cycle, which can be expressed in the state transition diagram shown in Figure 1. Here it can be seen that upon initialization, an instance of this class moves to the idle state, where it begins checking for passengers. The elevator will load the maximum passengers, and begin moving up to the lowest floor request. The elevator will then stop and unload the passenger(s). If there are more passengers to unload, the elevator will go to the moving up state. If there are no more passengers in the elevator, it will begin moving down until it reaches the lobby. When the elevator reaches the lobby, it will go to the load passengers state.
 
@@ -155,108 +163,136 @@ The behavior of the elevator class is now specified in enough detail so that it 
 
 After looking at the elevator object, it is determined that the passenger portion may posses some complexity and would be a good candidate for a subclass. Its primary responsibility would be to keep track of the destination floor of the passenger. The abstraction of the passenger class is summarized as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Passenger</TD>
+</TR>
 
-Passenger
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Keep track of the destination floor.</TD>
+</TR>
 
-Responsibilities:
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>Current_destination</TD>
+</TR>
 
-Keep track of the destination floor.
-
-Operations:
-
-Current\_destination
-
-Attributes:
-
-Destination\_floor
+<TR>
+<TD valign="top">Attributes:</TD>
+<TD>Destination_floor</TD>
+</TR>
+</TABLE>
 
 One of the few requirements for the simulator is a user interface. A likely place to handle screen output and input would be from the observer point of view. An observer class could gather statistics from each elevator and display them on the screen, and process any operator requests. It would play the role of a SCADA (Supervisory Control and Data Acquisition) unit. If the system were to expand and control real elevators, or if the simulator were to grow to encompass more than just a PC, the observer class could be replaced with a commercial-off-the-shelf SCADA package without affecting the functionality of the simulator or system.
 
 The operator request menus and the elevator simulation action display should be separate from the collector of the simulation statistics (the observer). The roles and responsibilities of the observer abstraction is then considered. The observer is responsible for keeping track of passengers leaving a floor and entering an elevator, and passengers leaving that elevator and entering a floor. It should also track which floor the passengers came from. The observer should be tied to one elevator, such that it only knows the statistics of that elevator. The abstraction of the observer class is summarized as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Observer</TD>
+</TR>
 
-Observer
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Keep track of the passengers that enter and exit the elevator.</TD>
+</TR>
 
-Responsibilities:
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>Total_exit_passengers<BR>
+Total_entry_passengers<BR>
+Passenger_entry<BR>
+Passenger_exit</TD>
+</TR>
 
-Keep track of the passengers that enter and exit the elevator.
-
-Operations:
-
-Total\_exit\_passengers  
-Total\_entry\_passengers  
-Passenger\_entry  
-Passenger\_exit
-
-Attributes:
-
-Total\_Entry\_Passengers  
-Total\_Exit\_Passengers
+<TR>
+<TD valign="top">Attributes:</TD>
+<TD>Total_Entry_Passengers<BR>
+Total_Exit_Passengers</TD>
+</TR>
+</TABLE>
 
 Since the operator request menus and the elevator simulation action display are separate from the observer, separate abstractions must be defined for each. Another abstraction that will be necessary will be an interface between the observer and the displays. By prototyping some displays during analysis before determining the interface needs, we can de-couple the simulation from the particular display package that might be used. Figure 2 shows one such prototype for the simulation display.
 
 We can, by analyzing the elements in Figure 2, derive an abstraction that can be used to display the simulation. Some of the responsibilities include displaying the passengers per hour information, displaying the static building with elevator shafts and floors, displaying the dynamic elevators traveling up and down the shafts, and displaying passengers entering and exiting the elevator. The abstraction of the draw elevator simulation class is as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Display_Elevator_Simulation</TD>
+</TR>
 
-Display\_Elevator\_Simulation
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Display the passengers per hour information.<BR>
+Displaying the static building with elevator shafts and floors.<BR>
+Displaying the dynamic elevators traveling up and down the shafts.<BR>
+Displaying passengers entering and exiting the elevator.</TD>
+</TR>
 
-Responsibilities:
-
-Display the passengers per hour information.  
-Displaying the static building with elevator shafts and floors.  
-Displaying the dynamic elevators traveling up and down the shafts.  
-Displaying passengers entering and exiting the elevator.
-
-Operations:
-
-Display\_passenger\_per\_hour  
-Display\_static\_building  
-Display\_dynamic\_elevator  
-Display\_passenger\_entry  
-Display\_passenger\_exit
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>Display_passenger_per_hour<BR>
+Display_static_building<BR>
+Display_dynamic_elevator<BR>
+Display_passenger_entry<BR>
+Display_passenger_exit</TD>
+</TR>
+</TABLE>
 
 ![[User Interface Prototype]](images/elev2.gif)  
 Figure 2. Elevator simulator user interface prototype.
 
 The operator request menus can be text based or window based. For simplicity, we will analyze the text based menus. Figure 2 shows one such prototype for the text based menus and prompts display. This abstraction is responsible for displaying the menu and prompting for input. The receipt of input will be in the main body of the program. This abstraction of the text menu and prompts class is summarized as follows:
 
-Name:
+<TABLE border="0">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Menu_and_Prompts</TD>
+</TR>
 
-Menu\_and\_Prompts
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Display the menu. Prompt for input.</TD>
+</TR>
 
-Responsibilities:
-
-Display the menu. Prompt for input.
-
-Operations:
-
-Display\_menu  
-Display\_number\_of\_elevators\_prompt  
-Display\_print\_reports\_options
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>Display_menu<BR>
+Display_number_of_elevators_prompt<BR>
+Display_print_reports_options</TD>
+</TR>
+</TABLE>
 
 ![[Text menu prototypes]](images/elev3.gif)  
 Figure 3. Text menu prototypes.
 
 Another requirement for the simulator is the final report on the activities of all the major objects. A reporting class will be necessary to print the actual report. We can derive the report information during simulation and pass it to the report class. The report class is responsible for receiving the information and printing the report to the printer or the screen. The report class is summarized as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Print_Reports</TD>
+</TR>
 
-Print\_Reports
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Print report to screen or printer.</TD>
+</TR>
 
-Responsibilities:
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>Print_Report</TD>
+</TR>
 
-Print report to screen or printer.
-
-Operations:
-
-Print\_Report
-
-Operations:
-
-static\_report\_layout
+<TR>
+<TD valign="top">Operations:</TD>
+<TD>static_report_layout</TD>
+</TR>
+</TABLE>
 
 The report will contain information about the activities of elevator and passengers. It will include totals from each elevator such as the elevator number, the total passengers, the total time, the flow rate and the total number of passengers who exited at each floor. The report will also contain a summary for the building which will be totals of all the elevators. A sample report is shown in Figure 4.
 
@@ -265,31 +301,37 @@ Figure 4. A sample report showing the activities of the major objects.
 
 In order to make the output design flexible, we need to de-couple the screen and printer from the report output and from the display output. This will require 2 more classes. These two classes can be derived from a super class dedicated to output. The output class can include such activities as draw text, draw line, draw circle, draw rectangle, set text size, set text style, and set line size. The output class is summarized as follows:
 
-Name:
+<TABLE border="1">
+<TR>
+<TD valign="top">Name:</TD>
+<TD>Output</TD>
+</TR>
 
-Output
+<TR>
+<TD valign="top">Responsibilities:</TD>
+<TD>Maintain the commands for output to screen or printer.</TD>
+</TR>
 
-Responsibilities:
+<TR>
+<TD valign="top">Operations (virtual):</TD>
+<TD>Draw_Text<BR>
+Draw_Line<BR>
+Draw_Circle<BR>
+Draw_Rectangle<BR>
+Set_Text_Size<BR>
+Set_Text_Style<BR>
+Set_Line_Style<BR>
+Set_Line_Size</TD>
+</TR>
 
-Maintain the commands for output to screen or printer.
-
-Operations (virtual):
-
-Draw\_Text  
-Draw\_Line  
-Draw\_Circle  
-Draw\_Rectangle  
-Set\_Text\_Size  
-Set\_Text\_Style  
-Set\_Line\_Style  
-Set\_Line\_Size
-
-Attributes:
-
-line\_style  
-line\_size  
-text\_style  
-text\_size
+<TR>
+<TD valign="top">Attributes:</TD>
+<TD>line_style<BR>
+line_size<BR>
+text_style<BR>
+text_size</TD>
+</TR>
+</TABLE>
 
 ### Observations
 
@@ -299,17 +341,9 @@ It was very different to design using an object oriented approach. I am used to 
 
 ### Source Code
 
-The source code was written using Turbo C++. It uses the Turbo C++ BGI graphics library, and requires one of the BGI object files to be linked.
+The original source code was written using Turbo C++ and the Turbo C++ BGI graphics library, and required one of the BGI object files to be linked.
 
-[ELEVATOR.ZIP](zip/elevator.zip)
-
-I have modified the code to work with Microsoft VC++ (v1.52).
-
-[MS\_ELEV.ZIP](zip/ms_elev.zip)
-
-I have modified the source code to work with [SDL](http://www.libsdl.org/) - Simple DirectMedia Layer. It is now cross platform and should compile with most any compiler. I have not fully tested it, but have gotten most of it to work under [Debian Linux](http://www.debian.org/) and under Windows with MSVC6.
-
-[sdl-elevator.zip](zip/sdl-elevator.zip)
+However, I have modified the source code to work with [SDL](http://www.libsdl.org/) - Simple DirectMedia Layer. SDL is cross platform and should compile with most any compiler. I have not fully tested it, but have gotten most of it to work under [Debian Linux](http://www.debian.org/).
 
 ### References
 
